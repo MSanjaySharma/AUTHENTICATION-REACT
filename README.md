@@ -39,7 +39,7 @@ cd client && npm run startClient
 
 - User must signup and signin to verify their identity to use the application.
 - Bcryptjs and JWT used for authentication.
-- Route guarding is implemented as React HOC's.
+- Route guarding feature implemented as React HOC's.
 - Dark Mode implemented using the materialUI theming.
 - Cross tab sync of data.
 
