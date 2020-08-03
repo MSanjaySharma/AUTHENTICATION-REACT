@@ -20,15 +20,5 @@ router.post("/customers", authenticateUser, customersController.create);
 router.put("/customers/:id", authenticateUser, customersController.update);
 router.delete("/customers/:id", authenticateUser, customersController.delete);
 
-router.get("/departments", authenticateUser, departmentsController.list);
-router.get("/departments/:id", authenticateUser, departmentsController.show);
-router.post("/departments", authenticateUser, departmentsController.create);
-router.put("/departments/:id", authenticateUser, departmentsController.update);
-router.delete(
-  "/departments/:id",
-  authenticateUser,
-  departmentsController.delete
-);
-
 
 module.exports = router;
