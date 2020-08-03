@@ -36,15 +36,5 @@ router.post("/employees", authenticateUser, employeesController.create);
 router.put("/employees/:id", authenticateUser, employeesController.update);
 router.delete("/employees/:id", authenticateUser, employeesController.delete);
 
-router.get("/tickets", authenticateUser, ticketsController.list);
-router.get("/tickets/:id", authenticateUser, ticketsController.show);
-router.post("/tickets", authenticateUser, ticketsController.create);
-router.put("/tickets/:id", authenticateUser, ticketsController.update);
-router.delete(
-  "/tickets/soft_delete/:id",
-  authenticateUser,
-  ticketsController.softDelete
-);
-router.delete("/tickets/:id", authenticateUser, ticketsController.delete);
 
 module.exports = router;

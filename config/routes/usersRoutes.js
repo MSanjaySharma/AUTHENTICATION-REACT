@@ -8,13 +8,7 @@ const { runValidation } = require("../validators");
 const usersValidator = require("../validators/usersValidator");
 
 //middlewares
-const {
-  authenticateAdminUser,
-} = require("../../app/middlewares/authenticateAdminUser");
-const { isAdmin } = require("../../app/middlewares/isAdmin");
 const { authenticateUser } = require("../../app/middlewares/authenticateUser");
-const { checkLoginCount } = require("../../app/middlewares/checkLoginCount");
-const { photo } = require("../../app/controllers/blogsController");
 
 const router = express.Router();
 
