@@ -37,32 +37,4 @@ router.post(
 //LOGOUT
 router.delete("/logout", authenticateUser, usersController.logout);
 
-//ACCOUNT DETAILS WITH LOGIN
-router.get(
-  "/account",
-  authenticateUser,
-  checkLoginCount,
-  usersController.account
-);
-
-//ACCOUNT DETAILS FOR PUBLIC PROFILE
-router.get("/:username", usersController.publicProfile);
-
-router.put("/update", authenticateUser, usersController.update);
-router.get("/photo/:username", usersController.photo);
-
-//is admin
-router.get("/isAdmin", isAdmin);
-
-//test
-router.get("/admin", authenticateAdminUser, (req, res) => {
-  res.json({ message: "admin page" });
-});
-
-router.get("/secret", usersController.requireSignin, (req, res) => {
-  res.json({
-    message: "you have access to secret page",
-  });
-});
-
 module.exports = router;
