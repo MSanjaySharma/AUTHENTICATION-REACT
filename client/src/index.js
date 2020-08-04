@@ -7,9 +7,9 @@ import App from "./App";
 import { store, persistor } from "./store/configureStore";
 
 function MyApp() {
-  /*   store.subscribe(() => {
+    store.subscribe(() => {
     console.log(store.getState());
-  }); */
+  });
 
   return (
     <Provider store={store}>
