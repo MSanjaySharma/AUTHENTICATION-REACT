@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "authentication-express",
   "version": "1.0.0",
-  "description": "Express Template",
+  "description": "authentication-express",
   "main": "index.js",
   "scripts": {
     "start": "node server.js"
