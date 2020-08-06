@@ -52,15 +52,6 @@ usersController.login = (req, res) => {
             expiresIn: "30d",
           });
           res.cookie("token", token, { expiresIn: "30d" });
-          User.findByIdAndUpdate(
-            user._id,
-            { $inc: { loginCount: 1 } },
-            { new: true }
-          ).then((user) => {
-            res.json({
-              token: `Bearer ${token}`,
-            });
-          });
         } else {
           res.json({ error: "invalid email or password" });
         }
@@ -70,14 +61,12 @@ usersController.login = (req, res) => {
 };
 
 usersController.logout = (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.user._id, loginCount: { $gt: 0 } },
-    { $inc: { loginCount: -1 } },
-    { new: true }
-  )
+  User.findOne({ _id: req.user._id })
     .then((user) => {
-      res.clearCookie("token");
-      res.json({ message: "Logout success!" });
+      if (user) {
+        res.clearCookie("token");
+        res.json({ message: "Logout success!" });
+      }
     })
     .catch((err) => {
       res.json({ error: "Logout error!" });
