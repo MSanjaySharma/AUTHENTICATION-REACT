@@ -66,6 +66,8 @@ usersController.logout = (req, res) => {
       if (user) {
         res.clearCookie("token");
         res.json({ message: "Logout success!" });
+      } else {
+        res.json({ error: "Logout error!" });
       }
     })
     .catch((err) => {
