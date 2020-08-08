@@ -46,12 +46,16 @@ usersController.login = (req, res) => {
             _id: user._id,
             email: user.email,
             username: user.username,
-            role: user.role,
           };
-          const token = jwt.sign(tokenData, process.env.JWT_SIGN_KEY, {
-            expiresIn: "30d",
-          });
+          const token = jwt.sign(
+            tokenData,
+            process.env.JWT_SIGN_KEY || "secretkey",
+            {
+              expiresIn: "30d",
+            }
+          );
           res.cookie("token", token, { expiresIn: "30d" });
+          res.json({ message: "login sucess" });
         } else {
           res.json({ error: "invalid email or password" });
         }
