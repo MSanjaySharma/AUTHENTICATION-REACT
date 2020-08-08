@@ -19,10 +19,6 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
-// const authorizeUser = () => {
-
-// }
-
 module.exports = {
   authenticateUser,
 };
