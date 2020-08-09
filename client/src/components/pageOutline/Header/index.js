@@ -233,7 +233,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
     </div>
   );
