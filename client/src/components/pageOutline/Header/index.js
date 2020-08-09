@@ -231,6 +231,11 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
               </IconButton>
             )}
           </div>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </div>
   );
 }
 
