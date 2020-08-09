@@ -38,9 +38,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
 
   const handleLogout = () => {
     handleMenuClose();
