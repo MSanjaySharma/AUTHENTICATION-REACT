@@ -38,7 +38,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
     handleMobileMenuClose();
   };
 
-
   const handleLogout = () => {
     handleMenuClose();
     logout();
@@ -232,22 +231,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
               </IconButton>
             )}
           </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </div>
   );
 }
 
