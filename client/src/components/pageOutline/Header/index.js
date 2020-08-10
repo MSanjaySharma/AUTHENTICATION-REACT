@@ -67,9 +67,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuBlogs}>BLOGS</MenuItem>
-      <MenuItem onClick={handleMenuProfile}>PROFILE</MenuItem>
-      <MenuItem onClick={handleMenuDashboard}>DASHBOARD</MenuItem>
       <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
     </Menu>
   );
@@ -182,22 +179,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
                   <Typography className={classes.dashboardText}>
                     BLOGS
                   </Typography>
-                </MUILink>
-              </Link>
-            )}
-
-            {isAuthenticated && isAdmin && (
-              <Link href="/admin">
-                <MUILink
-                  style={
-                    isDark
-                      ? { textDecoration: "none", color: "white" }
-                      : { textDecoration: "none", color: "black" }
-                  }
-                >
-                  <Typography className={classes.dashboardText}>{`${
-                    userName.toUpperCase().split(" ")[0]
-                  }'S DASHBOARD`}</Typography>
                 </MUILink>
               </Link>
             )}
