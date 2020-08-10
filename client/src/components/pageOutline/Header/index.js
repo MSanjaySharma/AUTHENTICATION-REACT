@@ -45,15 +45,15 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
   };
 
   const handleMenuDashboard = () => {
-    isAdmin ? Router.push("/admin") : Router.push("/user");
+    isAdmin ? history.push("/admin") : history.push("/user");
   };
 
   const handleMenuBlogs = () => {
-    Router.push("/blogs");
+    history.push("/blogs");
   };
 
   const handleMenuProfile = () => {
-    Router.push(`/profile/${photoId}`);
+    history.push(`/profile/${photoId}`);
   };
 
   const menuId = "primary-search-account-menu";
