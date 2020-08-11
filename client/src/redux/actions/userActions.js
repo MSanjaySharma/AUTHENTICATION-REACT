@@ -53,7 +53,7 @@ export const startLoginUser = (formData, changeState) => {
           axios
             .get("/users/account", {
               headers: {
-                Authorization: getCookie("token", ""),
+                Authorization: getCookie("token"),
               },
             })
             .then((response) => {
@@ -84,7 +84,7 @@ export const startGetUser = () => {
   return (dispatch) => {
     axios
       .get("/users/account", {
-        headers: { Authorization: getCookie("token", "") },
+        headers: { Authorization: getCookie("token") },
       })
       .then((response) => {
         const user = response.data;
@@ -105,16 +105,12 @@ export const startUserLogout = () => {
   return (dispatch) => {
     axios
       .delete("/users/logout", {
-        headers: { Authorization: getCookie("token", "") },
+        headers: { Authorization: getCookie("token") },
       })
       .then((response) => {
         if (response.data.message) {
-          //dispatch(removeUserToken());
           removeCookie("token");
           dispatch({ type: "PURGE_USERS" });
-          dispatch({ type: "PURGE_CATEGORIES" });
-          dispatch({ type: "PURGE_TAGS" });
-          dispatch({ type: "PURGE_BLOGS" });
           window.location.href = "/";
         }
       })
@@ -133,72 +129,5 @@ export const startUserLogout = () => {
 export const reauthenticate = (token) => {
   return (dispatch) => {
     dispatch(setToken(token));
-  };
-};
-
-//PUBLIC PROFILE INFO
-export const startUserPublicProfile = (username) => {
-  return axios
-    .get(`/users/${username}`)
-    .then((response) => response.data)
-    .catch((err) => err.response.data);
-};
-
-//USER UPDATE
-export const startUserUpdate = (formData, changeState) => {
-  return (dispatch) => {
-    axios
-      .put("/users/update", formData, {
-        headers: {
-          Authorization: getCookie("token", ""),
-        },
-      })
-      .then((response) => {
-        if (response.data.hasOwnProperty("error")) {
-          console.log(response.data);
-          changeState("", response.data.error);
-        } else {
-          dispatch(setUser(response.data));
-          changeState("User Details updated succesfully", "");
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          jwtError(dispatch);
-        } else {
-          changeState("", error.response.data.error);
-        }
-      });
-  };
-};
-
-
-
-
-//LIKE A BLOG
-export const startLikeUnlikeBlog = (blogId) => {
-  return (dispatch) => {
-    axios
-      .get(`/likeUnlike/${blogId}`, {
-        headers: {
-          Authorization: getCookie("token", ""),
-        },
-      })
-      .then((response) => {
-        if (response.data.hasOwnProperty("error")) {
-          console.log(response.data);
-        } else {
-          const user = response.data;
-          dispatch(setUser(user));
-        }
-      })
-      /* .catch((error) => {
-        //console.log(error.response);
-        if (error.response.status === 401) {
-          jwtError(dispatch);
-        } else {
-          console.log(error.response.data.error);
-        }
-      }); */
   };
 };
