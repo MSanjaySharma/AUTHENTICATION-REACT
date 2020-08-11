@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import useDarkMode from "use-dark-mode";
 
@@ -77,7 +77,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
     <div className={classes.grow}>
       <AppBar position="fixed" color="default">
         <Toolbar>
-          <Link href="/">
+          <Link to="/">
             <MUILink
               style={
                 isDark
@@ -110,7 +110,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
             </MUILink>
 
             {!isAuthenticated && (
-              <Link href="/blogs">
+              <Link to="/blogs">
                 <MUILink
                   style={
                     isDark
@@ -124,7 +124,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
             )}
 
             {!isAuthenticated && (
-              <Link href="/signin">
+              <Link to="/signin">
                 <MUILink
                   style={
                     isDark
@@ -138,7 +138,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
             )}
 
             {!isAuthenticated && (
-              <Link href="/signup">
+              <Link to="/signup">
                 <MUILink
                   style={
                     isDark
@@ -152,7 +152,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
             )}
 
             {isAuthenticated && (
-              <Link href="/newBlog">
+              <Link to="/newBlog">
                 <MUILink
                   style={
                     isDark
@@ -168,7 +168,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
             )}
 
             {isAuthenticated && (
-              <Link href="/blogs">
+              <Link to="/blogs">
                 <MUILink
                   style={
                     isDark
@@ -184,7 +184,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
             )}
 
             {isAuthenticated && !isAdmin && (
-              <Link href="/user">
+              <Link to="/user">
                 <MUILink
                   style={
                     isDark
