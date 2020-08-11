@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MUILink from "@material-ui/core/Link";
 import useStyles from "./useStyles";
-import Avatar from "@material-ui/core/Avatar";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import NightsStayIcon from "@material-ui/icons/NightsStay";
 import FlareIcon from "@material-ui/icons/Flare";
 
@@ -30,13 +30,8 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleLogout = () => {
@@ -90,9 +85,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
               </Typography>
             </MUILink>
           </Link>
-          <div className={classes.search}>
-            <DynamicSearch />
-          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MUILink
@@ -208,8 +200,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Avatar src={`${API}/users/photo/${photoId}`} />
-                {/* <AccountCircle /> */}
+                <AccountCircle />
               </IconButton>
             )}
           </div>
