@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import useDarkMode from "use-dark-mode";
 
 import { startUserLogout } from "../../../redux/actions/userActions";
+import { getCookie } from "../../../utils/functions/cookie";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -19,8 +20,9 @@ import FlareIcon from "@material-ui/icons/Flare";
 
 const APP_NAME = "AUTHENTICATION REACT";
 
-function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
+function Header({ logout }) {
   const classes = useStyles();
+  const isAuthenticated = getCookie("token");
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -162,22 +164,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
               </Link>
             )}
 
-            {isAuthenticated && !isAdmin && (
-              <Link to="/user">
-                <MUILink
-                  style={
-                    isDark
-                      ? { textDecoration: "none", color: "white" }
-                      : { textDecoration: "none", color: "black" }
-                  }
-                >
-                  <Typography className={classes.dashboardText}>{`${
-                    userName.toUpperCase().split(" ")[0]
-                  }'S DASHBOARD`}</Typography>
-                </MUILink>
-              </Link>
-            )}
-
             {isAuthenticated && (
               <IconButton
                 edge="end"
@@ -198,12 +184,7 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: !!state.user.token,
-  userName: state.user.userInfo.name,
-  photoId: state.user.userInfo.username,
-  isAdmin: Boolean(state.user.userInfo.role),
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = { logout: startUserLogout };
 
