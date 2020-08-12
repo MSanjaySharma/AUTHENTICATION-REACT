@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import useDarkMode from "use-dark-mode";
 
@@ -20,7 +20,6 @@ import FlareIcon from "@material-ui/icons/Flare";
 const APP_NAME = "AUTHENTICATION REACT";
 
 function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
-  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
