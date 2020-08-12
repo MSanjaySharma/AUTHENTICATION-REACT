@@ -8,6 +8,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import MUILink from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -17,9 +18,9 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 import useStyles from "./useStyles";
+import { startRegisterUser } from "../../../redux/actions/userActions";
+import CustomizedSnackbars from "../../../utils/components/SnackBar";
 import schema from "./schema";
-
-import { startAddUser } from "../../../redux/actions/userActions";
 
 const initialValues = {
   name: "",
@@ -32,6 +33,9 @@ export class SignupComponent extends Component {
     super(props);
     this.state = {
       showPassword: false,
+      error: "",
+      loading: false,
+      message: "",
     };
   }
 
@@ -43,17 +47,26 @@ export class SignupComponent extends Component {
     e.preventDefault();
   };
 
-  redirect = () => {
-    return this.props.history.push("/signin");
+  changeState = (message, error) => {
+    this.setState({
+      loading: false,
+      message,
+      error,
+    });
   };
 
   handleSubmit = (values) => {
     const formData = {
-      username: values.name,
+      name: values.name,
       email: values.email,
       password: values.password,
     };
-    this.props.dispatch(startAddUser(formData, this.redirect));
+    this.setState({ loading: true });
+    this.props.dispatch(startRegisterUser(formData, this.changeState));
+  };
+
+  redirect = () => {
+    return window.history.push("/signin");
   };
 
   render() {
@@ -154,10 +167,10 @@ export class SignupComponent extends Component {
                   </Button>
                   <Grid container justify="flex-end">
                     <Grid item>
-                      <Link style={{ textDecoration: "none" }} to="/signin">
-                        <Typography color="primary" variant="body2">
-                          {"Already have an account? Sign in"}
-                        </Typography>
+                      <Link to="/signin">
+                        <MUILink variant="body2">
+                          Already have an account? Sign in
+                        </MUILink>
                       </Link>
                     </Grid>
                   </Grid>
@@ -165,6 +178,12 @@ export class SignupComponent extends Component {
               )}
             </Formik>
           </div>
+          <CustomizedSnackbars
+            changeState={this.changeState}
+            message={this.state.message}
+            error={this.state.error}
+            redirect={this.redirect}
+          />
         </Container>
       </>
     );

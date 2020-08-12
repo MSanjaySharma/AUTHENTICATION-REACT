@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import MUILink from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -17,8 +18,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 import useStyles from "./useStyles";
-import { startSetUser } from "../../../redux/actions/userActions";
-
+import { startLoginUser } from "../../../redux/actions/userActions";
+import CustomizedSnackbars from "../../../utils/components/SnackBar";
 import schema from "./schema";
 
 const initialValues = {
@@ -31,6 +32,9 @@ export class SigninComponent extends Component {
     super(props);
     this.state = {
       showPassword: false,
+      error: "",
+      loading: false,
+      message: "",
     };
   }
 
@@ -42,16 +46,27 @@ export class SigninComponent extends Component {
     e.preventDefault();
   };
 
+  changeState = (message, error) => {
+    this.setState({
+      loading: false,
+      message,
+      error,
+    });
+  };
+
   redirect = () => {
-    return this.props.history.push("/");
+    return window.history.push("/");
+    
   };
 
   handleSubmit = (values) => {
     const formData = {
+      name: values.name,
       email: values.email,
       password: values.password,
     };
-    this.props.dispatch(startSetUser(formData, this.redirect));
+    this.setState({ loading: true });
+    this.props.dispatch(startLoginUser(formData, this.changeState));
   };
 
   render() {
@@ -128,16 +143,22 @@ export class SigninComponent extends Component {
                   Sign In
                 </Button>
                 <div className={classes.linkDiv}>
-                  <Link style={{ textDecoration: "none" }} to="/signup">
-                    <Typography color="primary" variant="body2">
+                  <Link to="/signup">
+                    <MUILink variant="body2">
                       {"Don't have an account? Sign Up"}
-                    </Typography>
+                    </MUILink>
                   </Link>
                 </div>
               </Form>
             )}
           </Formik>
         </div>
+        <CustomizedSnackbars
+          changeState={this.changeState}
+          message={this.state.message}
+          error={this.state.error}
+          redirect={this.redirect}
+        />
       </Container>
     );
   }

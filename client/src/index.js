@@ -16,6 +16,7 @@ import "./styles/globalStyles/link.css";
 
 function MyApp() {
   const { value: isDark } = useDarkMode(true);
+
   store.subscribe(() => {
     console.log(store.getState());
   });
