@@ -39,18 +39,6 @@ function Header({ userName, photoId, isAuthenticated, logout, isAdmin }) {
     logout();
   };
 
-  const handleMenuDashboard = () => {
-    isAdmin ? history.push("/admin") : history.push("/user");
-  };
-
-  const handleMenuBlogs = () => {
-    history.push("/blogs");
-  };
-
-  const handleMenuProfile = () => {
-    history.push(`/profile/${photoId}`);
-  };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
