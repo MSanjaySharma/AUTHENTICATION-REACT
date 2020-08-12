@@ -19,7 +19,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import useStyles from "./useStyles";
 import schema from "./schema";
 
-import { startAddUser } from "../../../actions/user";
+import { startAddUser } from "../../../redux/actions/userActions";
 
 const initialValues = {
   name: "",

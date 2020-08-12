@@ -17,7 +17,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 import useStyles from "./useStyles";
-import { startSetUser } from "../../../actions/user";
+import { startSetUser } from "../../../redux/actions/userActions";
 
 import schema from "./schema";
 
