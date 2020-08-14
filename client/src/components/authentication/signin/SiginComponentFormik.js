@@ -7,7 +7,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import MUILink from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -56,7 +55,6 @@ export class SigninComponent extends Component {
 
   redirect = () => {
     return window.history.push("/");
-    
   };
 
   handleSubmit = (values) => {
@@ -144,9 +142,9 @@ export class SigninComponent extends Component {
                 </Button>
                 <div className={classes.linkDiv}>
                   <Link to="/signup">
-                    <MUILink variant="body2">
+                    <Typography variant="body2" style={{ color: "#3f51b5" }}>
                       {"Don't have an account? Sign Up"}
-                    </MUILink>
+                    </Typography>
                   </Link>
                 </div>
               </Form>

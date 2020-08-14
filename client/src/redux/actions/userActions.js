@@ -25,7 +25,7 @@ export const removeUserToken = () => {
 export const startRegisterUser = (formData, changeState) => {
   return (dispatch) => {
     axios
-      .post("/users/register", formData)
+      .post("/users/signup", formData)
       .then((response) => {
         if (response.data.hasOwnProperty("error")) {
           changeState("", response.data.error);
@@ -34,7 +34,12 @@ export const startRegisterUser = (formData, changeState) => {
         }
       })
       .catch((error) => {
-        changeState("Unable to Register!!! Check again later");
+        console.log(error.response);
+        if (error.response) {
+          changeState("", error.response.data);
+        } else {
+          changeState("", "Unable to Register. Try again later");
+        }
       });
   };
 };
