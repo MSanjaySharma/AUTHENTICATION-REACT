@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-module.exports.register = (req, res) => {
+module.exports.signup = (req, res) => {
   const body = req.body;
   const user = new User(body);
   user
@@ -14,7 +14,7 @@ module.exports.register = (req, res) => {
     });
 };
 
-module.exports.login = (req, res) => {
+module.exports.signin = (req, res) => {
   const body = req.body;
   let user;
   User.findByCredentials(body.email, body.password)
@@ -39,7 +39,7 @@ module.exports.account = (req, res) => {
   res.json({ _id, username, email });
 };
 
-module.exports.logout = (req, res) => {
+module.exports.signout = (req, res) => {
   const { user, token } = req;
   User.findByIdAndUpdate(user._id, { $pull: { tokens: { token: token } } })
     .then(() => {
