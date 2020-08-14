@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -10,7 +10,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
@@ -26,26 +25,26 @@ const initialValues = {
   password: "",
 };
 
-export class SigninComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showPassword: false,
-      error: "",
-      loading: false,
-      message: "",
-    };
-  }
+export const SiginComponentFormik = ({ startLoginUser }) => {
+  const classes = useStyles();
+  const history = useHistory();
 
-  handleClickShowPassword = () => {
+  const [state, setState] = useState({
+    showPassword: false,
+    error: "",
+    loading: false,
+    message: "",
+  });
+
+  const handleClickShowPassword = () => {
     this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
   };
 
-  handleMouseDownPassword = (e) => {
+  const handleMouseDownPassword = (e) => {
     e.preventDefault();
   };
 
-  changeState = (message, error) => {
+  const changeState = (message, error) => {
     this.setState({
       loading: false,
       message,
@@ -53,115 +52,111 @@ export class SigninComponent extends Component {
     });
   };
 
-  redirect = () => {
-    return window.history.push("/");
+  const redirect = () => {
+    return history.push("/");
   };
 
-  handleSubmit = (values) => {
+  const handleSubmit = (values) => {
     const formData = {
       name: values.name,
       email: values.email,
       password: values.password,
     };
-    this.setState({ loading: true });
-    this.props.dispatch(startLoginUser(formData, this.changeState));
+    setState({ loading: true });
+    startLoginUser(formData, changeState);
   };
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => this.handleSubmit(values)}
-            validationSchema={schema}
-          >
-            {({ setFieldValue, setFieldTouched, values, errors, touched }) => (
-              <Form className={classes.form}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Field
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      helperText={<ErrorMessage name="email"></ErrorMessage>}
-                      error={touched.email && Boolean(errors.email)}
-                      as={TextField}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field
-                      variant="outlined"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type={this.state.showPassword ? "text" : "password"}
-                      id="password"
-                      InputProps={{
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={this.handleClickShowPassword}
-                            onMouseDown={this.handleMouseDownPassword}
-                          >
-                            {this.state.showPassword ? (
-                              <Visibility />
-                            ) : (
-                              <VisibilityOff />
-                            )}
-                          </IconButton>
-                        ),
-                      }}
-                      helperText={<ErrorMessage name="password"></ErrorMessage>}
-                      error={touched.password && Boolean(errors.password)}
-                      as={TextField}
-                    />
-                  </Grid>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => handleSubmit(values)}
+          validationSchema={schema}
+        >
+          {({ setFieldValue, setFieldTouched, values, errors, touched }) => (
+            <Form className={classes.form}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Field
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    helperText={<ErrorMessage name="email"></ErrorMessage>}
+                    error={touched.email && Boolean(errors.email)}
+                    as={TextField}
+                  />
                 </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign In
-                </Button>
-                <div className={classes.linkDiv}>
-                  <Link to="/signup">
-                    <Typography variant="body2" style={{ color: "#3f51b5" }}>
-                      {"Don't have an account? Sign Up"}
-                    </Typography>
-                  </Link>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-        <CustomizedSnackbars
-          changeState={this.changeState}
-          message={this.state.message}
-          error={this.state.error}
-          redirect={this.redirect}
-        />
-      </Container>
-    );
-  }
-}
+                <Grid item xs={12}>
+                  <Field
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type={state.showPassword ? "text" : "password"}
+                    id="password"
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {state.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      ),
+                    }}
+                    helperText={<ErrorMessage name="password"></ErrorMessage>}
+                    error={touched.password && Boolean(errors.password)}
+                    as={TextField}
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              <div className={classes.linkDiv}>
+                <Link to="/signup">
+                  <Typography variant="body2" style={{ color: "#3f51b5" }}>
+                    {"Don't have an account? Sign Up"}
+                  </Typography>
+                </Link>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+      <CustomizedSnackbars
+        changeState={changeState}
+        message={state.message}
+        error={state.error}
+        redirect={redirect}
+      />
+    </Container>
+  );
+};
 
-const mapStateToProps = (state) => ({});
+const mapDispatchToProps = { startLoginUser };
 
-export default connect(mapStateToProps)(withStyles(useStyles)(SigninComponent));
+export default connect(null, mapDispatchToProps)(SiginComponentFormik);
