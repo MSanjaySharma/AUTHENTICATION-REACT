@@ -1,6 +1,7 @@
 {
   "name": "authentication-react",
   "version": "1.0.0",
+  "repository": {},
   "description": "User Authentication in React",
   "main": "server.js",
   "dependencies": {
