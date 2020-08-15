@@ -25,7 +25,7 @@ const storage = require("redux-persist/lib/storage").default;
 
 const persistConfig = {
   key: "reactjs",
-  whitelist: [], // add reducers to perisist ex:"user"
+  whitelist: ["user"], // add reducers to perisist ex:"user"
   storage, // if needed, use a safer storage
 };
 

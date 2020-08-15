@@ -12,11 +12,11 @@ import FlareIcon from "@material-ui/icons/Flare";
 import useStyles from "./useStyles";
 
 import { startUserLogout } from "../../redux/actions/userActions";
-import { getCookie } from "../../utils/functions/cookie";
+//import { getCookie } from "../../utils/functions/cookie";
 
-function Header({ logout }) {
+function Header({ logout, user }) {
   const classes = useStyles();
-  const isAuthenticated = !!getCookie("token");
+  const isAuthenticated = !!user._id;
 
   const handleLogout = () => {
     logout();
@@ -75,7 +75,7 @@ function Header({ logout }) {
   );
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({ user: state.user });
 
 const mapDispatchToProps = { logout: startUserLogout };
 

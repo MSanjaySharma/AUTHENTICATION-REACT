@@ -14,12 +14,12 @@ router.post(
   usersController.signup
 );
 router.post(
-  "/users/login",
+  "/users/signin",
   usersValidator.signin,
   runValidation,
   usersController.signin
 );
 router.get("/users/account", authenticateUser, usersController.account);
-router.delete("/users/logout", authenticateUser, usersController.signout);
+router.delete("/users/signout", authenticateUser, usersController.signout);
 
 module.exports = router;

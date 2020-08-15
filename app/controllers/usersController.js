@@ -24,10 +24,12 @@ module.exports.signin = (req, res) => {
     })
     .then((token) => {
       user = { _id: user._id, username: user.username, email: user.email };
-      res.json({
-        token,
-        user,
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 2592000000),
+        sameSite: true,
+        httpOnly: true,
       });
+      res.json(user);
     })
     .catch((err) => {
       res.json(err);
@@ -43,7 +45,8 @@ module.exports.signout = (req, res) => {
   const { user, token } = req;
   User.findByIdAndUpdate(user._id, { $pull: { tokens: { token: token } } })
     .then(() => {
-      res.json({ notice: "successfully logged out" });
+      res.clearCookie("token");
+      res.json({ message: "successfully logged out" });
     })
     .catch((err) => {
       res.json(err);

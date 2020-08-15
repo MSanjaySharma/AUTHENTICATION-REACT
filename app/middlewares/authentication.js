@@ -1,7 +1,7 @@
 const User = require("../models/user");
 
 const authenticateUser = (req, res, next) => {
-  const token = req.header("x-auth");
+  const token = req.cookies.token;
   User.findByToken(token)
     .then((user) => {
       if (user) {
@@ -20,3 +20,5 @@ const authenticateUser = (req, res, next) => {
 module.exports = {
   authenticateUser,
 };
+
+

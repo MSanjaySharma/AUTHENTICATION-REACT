@@ -21,8 +21,8 @@ import CustomizedSnackbars from "../../../utils/components/SnackBar";
 import schema from "./schema";
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "user2@gmail.com",
+  password: "123456789",
 };
 
 export const SiginComponentFormik = ({ startLoginUser }) => {
@@ -37,7 +37,10 @@ export const SiginComponentFormik = ({ startLoginUser }) => {
   });
 
   const handleClickShowPassword = () => {
-    this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
+    setState((prevState) => ({
+      ...state,
+      showPassword: !prevState.showPassword,
+    }));
   };
 
   const handleMouseDownPassword = (e) => {
@@ -45,7 +48,8 @@ export const SiginComponentFormik = ({ startLoginUser }) => {
   };
 
   const changeState = (message, error) => {
-    this.setState({
+    setState({
+      ...state,
       loading: false,
       message,
       error,
@@ -62,7 +66,7 @@ export const SiginComponentFormik = ({ startLoginUser }) => {
       email: values.email,
       password: values.password,
     };
-    setState({ loading: true });
+    setState({ ...state, loading: true });
     startLoginUser(formData, changeState);
   };
   return (
