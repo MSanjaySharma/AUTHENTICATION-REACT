@@ -23,13 +23,20 @@ module.exports.signin = (req, res) => {
       return user.generateToken();
     })
     .then((token) => {
-      user = { _id: user._id, username: user.username, email: user.email };
+      //user = { _id: user._id, username: user.username, email: user.email };
       res.cookie("token", token, {
-        expires: new Date(Date.now() + 2592000000),
-        sameSite: true,
+        expires: new Date(Date.now() + 864000000),
         httpOnly: true,
+        //secure: true,
+        sameSite: true,
       });
-      res.json(user);
+      res.cookie("isAuthenticated", true, {
+        expires: new Date(Date.now() + 864000000),
+        //httpOnly: true,
+        //secure: true,
+        sameSite: true,
+      });
+      res.json({ _id: user._id, username: user.username, email: user.email });
     })
     .catch((err) => {
       res.json(err);
@@ -46,6 +53,7 @@ module.exports.signout = (req, res) => {
   User.findByIdAndUpdate(user._id, { $pull: { tokens: { token: token } } })
     .then(() => {
       res.clearCookie("token");
+      res.clearCookie("isAuthenticated");
       res.json({ message: "successfully logged out" });
     })
     .catch((err) => {

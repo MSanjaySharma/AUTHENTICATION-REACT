@@ -9,10 +9,12 @@ const authenticateUser = (req, res, next) => {
         req.token = token;
         next();
       } else {
+        res.clearCookie("token");
         res.status("401").json({ notice: "token not available" });
       }
     })
     .catch((err) => {
+      res.clearCookie("token");
       res.status("401").json(err);
     });
 };
@@ -20,5 +22,3 @@ const authenticateUser = (req, res, next) => {
 module.exports = {
   authenticateUser,
 };
-
-
