@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -28,6 +28,7 @@ const initialValues = {
 export const SiginComponentFormik = ({ startLoginUser }) => {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
 
   const [state, setState] = useState({
     showPassword: false,
@@ -76,9 +77,16 @@ export const SiginComponentFormik = ({ startLoginUser }) => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
+        {!location.search && (
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+        )}
+        {location.search && (
+          <Typography component="h1" variant="h5">
+            Session Expired. Please Signin.
+          </Typography>
+        )}
 
         <Formik
           initialValues={initialValues}

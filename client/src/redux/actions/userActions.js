@@ -1,9 +1,4 @@
 import axios from "../../config/axios";
-import {
-  getCookie,
-  //setCookie,
-  removeCookie,
-} from "../../utils/functions/cookie";
 import jwtError from "../../utils/functions/jwtError";
 
 //SET USER
@@ -61,9 +56,7 @@ export const startLoginUser = (formData, changeState) => {
 export const startGetUser = () => {
   return (dispatch) => {
     axios
-      .get("/users/account", {
-        headers: { Authorization: getCookie("token") },
-      })
+      .get("/users/account")
       .then((response) => {
         const user = response.data;
         dispatch(setUser(user));
@@ -80,24 +73,21 @@ export const startGetUser = () => {
 
 //LOGOUT
 export const startUserLogout = () => {
-  console.log(getCookie("token"));
   return (dispatch) => {
     axios
       .delete("/users/signout")
       .then((response) => {
         if (response.data.message) {
-          removeCookie("token");
           dispatch({ type: "PURGE_USERS" });
           window.location.href = "/";
         }
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          //jwtError(dispatch);
+          jwtError(dispatch);
         } else {
           alert("couldnt logout!!! try again");
         }
-        //changeState("", "Couldn't logout!!! try again");
       });
   };
 };

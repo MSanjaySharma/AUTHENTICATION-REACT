@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import useDarkMode from "use-dark-mode";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,17 +11,16 @@ import FlareIcon from "@material-ui/icons/Flare";
 import useStyles from "./useStyles";
 
 import { startUserLogout } from "../../redux/actions/userActions";
-//import { getCookie } from "../../utils/functions/cookie";
+import { toggleDarkMode } from "../../redux/actions/darkModeAction";
+import { getCookie } from "../../utils/functions/cookie";
 
-function Header({ logout, user }) {
+function Header({ logout, user, isDark, toggleDarkMode }) {
   const classes = useStyles();
-  const isAuthenticated = !!user._id;
+  const isAuthenticated = getCookie("isAuthenticated");
 
   const handleLogout = () => {
     logout();
   };
-
-  const { value: isDark, toggle: toggleDarkMode } = useDarkMode();
 
   const linkStyle = isDark
     ? { textDecoration: "none", color: "white" }
@@ -41,7 +39,7 @@ function Header({ logout, user }) {
           <div className={classes.sectionDesktop}>
             <MUILink
               style={linkStyle}
-              onClick={toggleDarkMode}
+              onClick={() => toggleDarkMode(!isDark)}
               className={classes.signupin}
             >
               {isDark ? <FlareIcon /> : <NightsStayIcon />}
@@ -75,8 +73,11 @@ function Header({ logout, user }) {
   );
 }
 
-const mapStateToProps = (state) => ({ user: state.user });
+const mapStateToProps = (state) => ({
+  user: state.user,
+  isDark: state.darkMode,
+});
 
-const mapDispatchToProps = { logout: startUserLogout };
+const mapDispatchToProps = { logout: startUserLogout, toggleDarkMode };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

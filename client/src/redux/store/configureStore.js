@@ -1,12 +1,18 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 import userReducer from "../reducers/userReducer";
+import darkModeReducer from "../reducers/darkModeReducer";
+
+import crossBrowserListener from "../../utils/functions/reduxpersist-listener";
+///import hardSet from "redux-persist/lib/stateReconciler/hardSet";
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
 //import reducers
 
 //COMBINING ALL REDUCERS
 const combinedReducer = combineReducers({
   user: userReducer,
+  darkMode: darkModeReducer,
   //ADD OTHER REDUCERS HERE
 });
 
@@ -24,9 +30,10 @@ const { persistStore, persistReducer } = require("redux-persist");
 const storage = require("redux-persist/lib/storage").default;
 
 const persistConfig = {
-  key: "reactjs",
-  whitelist: ["user"], // add reducers to perisist ex:"user"
+  key: "root",
+  whitelist: ["user", "darkMode"], // add reducers to perisist ex:"user"
   storage, // if needed, use a safer storage
+  stateReconciler: autoMergeLevel2,
 };
 
 const persistedReducer = persistReducer(persistConfig, combinedReducer); // Create a new reducer with our existing reducer
@@ -35,5 +42,7 @@ export const store = createStore(
   persistedReducer,
   bindMiddleware([thunkMiddleware])
 ); // Creating the store again
+
+window.addEventListener("storage", crossBrowserListener(store, persistConfig));
 
 export const persistor = persistStore(store); // export persistor
