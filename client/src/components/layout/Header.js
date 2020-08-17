@@ -32,7 +32,7 @@ function Header({ logout, user, isDark, toggleDarkMode }) {
         <Toolbar>
           <Link style={linkStyle} to="/">
             <Typography className={classes.title} variant="h6" noWrap>
-              {"AUTHENTICATION REACT"}
+              {"MERN AUTHENTICATION"}
             </Typography>
           </Link>
           <div className={classes.grow} />
@@ -48,6 +48,14 @@ function Header({ logout, user, isDark, toggleDarkMode }) {
             <Link style={linkStyle} to="/">
               <Typography className={classes.signupin}>HOME</Typography>
             </Link>
+
+            {isAuthenticated && (
+              <Link style={linkStyle} to="/privateRoute">
+                <Typography className={classes.signupin}>
+                  PRIVATE ROUTE
+                </Typography>
+              </Link>
+            )}
 
             {!isAuthenticated && (
               <Link style={linkStyle} to="/signin">

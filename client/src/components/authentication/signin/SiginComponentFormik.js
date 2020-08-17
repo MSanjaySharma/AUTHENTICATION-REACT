@@ -21,7 +21,7 @@ import CustomizedSnackbars from "../../../utils/components/SnackBar";
 import schema from "./schema";
 
 const initialValues = {
-  email: "user2@gmail.com",
+  email: "richard@gmail.com",
   password: "123456789",
 };
 

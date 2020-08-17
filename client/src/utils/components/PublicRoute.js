@@ -2,16 +2,14 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { getCookie } from "../functions/cookie";
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export const PublicRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      getCookie("isAuthenticated") ? (
+      !getCookie("isAuthenticated") ? (
         <Component {...props} />
       ) : (
-        <Redirect
-          to={{ pathname: "/signin", state: { from: props.location } }}
-        />
+        <Redirect to={{ pathname: "/home", state: { from: props.location } }} />
       )
     }
   />
