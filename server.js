@@ -17,7 +17,7 @@ const app = express();
 configureDB();
 
 //middlewares
-app.use(helmet())
+app.use(helmet());
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(cookieParser());
